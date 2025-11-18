@@ -9,7 +9,7 @@ import { ProjectsSection } from '../sections/ProjectsSection'
 import { AboutSection } from '../sections/AboutSection'
 import { AcademicSection } from '../sections/AcademicSection'
 import { TrustedVoicesSection } from '../sections/TrustedVoicesSection'
-import { GallerySection } from '../sections/GallerySection'
+// import { GallerySection } from '../sections/GallerySection'
 import { ContactSection } from '../sections/ContactSection'
 
 const MOBILE_BREAKPOINT = '(max-width: 768px)'
