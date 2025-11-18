@@ -165,12 +165,12 @@ import type { SectionId } from '../constants/sections'
            </span>
          ))}
        </div>
-       <div className="mt-auto pt-4">
+       {/* <div className="mt-auto pt-4">
          <button className="group/cta inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition-colors duration-200 hover:text-blue-700">
            View More
            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1" />
          </button>
-       </div>
+       </div> */}
      </div>
    )
  }
