@@ -4,7 +4,7 @@ export const sections = [
   { id: 'about', label: 'About Me' },
   { id: 'academic', label: 'Academic Journey' },
   { id: 'trusted', label: 'Trusted Voices' },
-  { id: 'gallery', label: 'Gallery' },
+  // { id: 'gallery', label: 'Gallery' },
   { id: 'contact', label: 'Contact' },
 ] as const
 

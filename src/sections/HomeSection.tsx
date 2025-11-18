@@ -45,7 +45,7 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Associate Software Engineer
+            Software Engineer
             <motion.span
               className="h-1.5 w-1.5 rounded-full bg-blue-500/80"
               animate={{ scale: [1, 1.4, 1] }}
@@ -126,10 +126,12 @@ export function HomeSection({ onNavigate }: HomeSectionProps) {
               animate={{ y: [0, -16, 0] }}
               transition={{ repeat: Infinity, duration: 16, ease: 'easeInOut' }}
             >
-              <div className="flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-tr from-[#2563EB]/30 to-[#60A5FA]/20">
-                <span className="text-xl font-semibold text-blue-700">
-                  Dewmith Mihisara
-                </span>
+              <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-tr from-[#2563EB]/30 to-[#60A5FA]/20">
+                <img
+                  src="/dewmith-mihisara-home.jpeg"
+                  alt="Dewmith Mihisara"
+                  className="h-full w-full object-cover"
+                />
               </div>
             </motion.div>
           </div>

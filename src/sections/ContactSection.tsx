@@ -28,16 +28,16 @@ export function ContactSection() {
           <div className="space-y-4">
             <a
               className="group flex items-center gap-3 text-sm font-medium text-slate-700 transition-colors hover:text-blue-600"
-              href="mailto:dewmithmihisara@gmail.com"
+              href="mailto:mihisaralokuhewage@gmail.com"
             >
               <span className="flex size-10 items-center justify-center rounded-full bg-blue-100 text-blue-600">
                 <Mail className="size-4" />
               </span>
-              dewmithmihisara@gmail.com
+              mihisaralokuhewage@gmail.com
             </a>
             <a
               className="group flex items-center gap-3 text-sm font-medium text-slate-700 transition-colors hover:text-blue-600"
-              href="https://www.linkedin.com/in/dewmithmihisara"
+              href="https://www.linkedin.com/in/dewmith-mihisara/"
               target="_blank"
               rel="noreferrer"
             >
@@ -106,16 +106,8 @@ export function ContactSection() {
         </motion.div>
       </div>
       <footer className="mt-10 flex items-center justify-center">
-        <div className="flex w-full max-w-6xl flex-col items-center justify-between gap-3 rounded-3xl border border-blue-100/60 bg-white/70 px-6 py-4 text-xs font-medium uppercase tracking-[0.3em] text-slate-500 shadow-inner shadow-blue-500/5 backdrop-blur md:flex-row md:text-sm md:tracking-[0.2em]">
-          <span>© {new Date().getFullYear()} Dewmith Mihisara. All rights reserved.</span>
-          <span className="flex items-center gap-2">
-            Designed & developed with
-            <span className="relative inline-flex h-2 w-2">
-              <span className="absolute inset-0 rounded-full bg-blue-500 opacity-75" />
-              <span className="absolute inset-0 animate-ping rounded-full bg-blue-400" />
-            </span>
-            care.
-          </span>
+        <div className="flex w-full max-w-6xl items-center justify-center rounded-3xl border border-blue-100/60 bg-white/70 px-6 py-4 text-xs font-medium text-slate-500 shadow-inner shadow-blue-500/5 backdrop-blur sm:text-sm">
+          <span>© 2025 Dewmith Mihisara. All rights reserved.</span>
         </div>
       </footer>
     </section>

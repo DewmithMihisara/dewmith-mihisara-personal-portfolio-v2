@@ -29,8 +29,8 @@ const highlights = [
 ]
 
 const stats = [
-  { label: 'Years coding', value: '5+' },
-  { label: 'Production projects', value: '12' },
+  { label: 'Years coding', value: '2+' },
+  { label: 'Production projects', value: '5' },
   { label: 'Cloud platforms', value: 'AWS, GCP' },
   { label: 'Favorite stack', value: 'Java · Spring Boot · React' },
 ]

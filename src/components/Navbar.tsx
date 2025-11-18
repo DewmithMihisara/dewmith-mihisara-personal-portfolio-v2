@@ -40,7 +40,7 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
     { key: 'home', label: 'Home', section: 'home' as SectionId },
     { key: 'projects', label: 'Projects', section: 'projects' as SectionId },
     { key: 'profile', label: 'Profile', children: profileSections },
-    { key: 'gallery', label: 'Gallery', section: 'gallery' as SectionId },
+    // { key: 'gallery', label: 'Gallery', section: 'gallery' as SectionId },
     { key: 'contact', label: 'Contact', section: 'contact' as SectionId },
   ] as const
 
@@ -187,7 +187,8 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="mx-4 mt-3 rounded-3xl border border-white/70 bg-white/95 px-6 pb-6 pt-2 shadow-xl shadow-blue-500/10 backdrop-blur md:hidden"
+            transition={{ duration: 0.2 }}
+            className="pointer-events-auto mx-4 mt-3 rounded-3xl border border-white/70 bg-white/95 px-6 pb-6 pt-2 shadow-xl shadow-blue-500/10 backdrop-blur md:hidden"
           >
             <div className="flex flex-col gap-2">
               {navItems.map((item) => {
@@ -215,7 +216,8 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="mt-2 space-y-1 pl-3"
+                            transition={{ duration: 0.2 }}
+                            className="mt-2 space-y-1 overflow-hidden pl-3"
                           >
                             {item.children.map((child: SectionId) => (
                               <button

@@ -313,8 +313,8 @@ function renderSection(section: SectionId, onNavigate: (section: SectionId) => v
       return <AcademicSection />
     case 'trusted':
       return <TrustedVoicesSection />
-    case 'gallery':
-      return <GallerySection />
+    // case 'gallery':
+    //   return <GallerySection />
     case 'contact':
       return <ContactSection />
     default:

@@ -75,7 +75,7 @@ import type { SectionId } from '../constants/sections'
  
          <div className="relative mx-auto w-full max-w-6xl">
            {showNavigation && (
-             <div className="pointer-events-none absolute inset-x-0 top-1/2 z-10 -translate-y-1/2 px-2 md:px-4">
+             <div className="pointer-events-none absolute inset-x-0 top-1/2 z-10 hidden -translate-y-1/2 px-2 md:block md:px-4">
                <div className="flex items-center justify-between">
                  <button
                    type="button"
@@ -85,7 +85,7 @@ import type { SectionId } from '../constants/sections'
                  >
                    <ArrowLeft className="size-4" />
                  </button>
- 
+
                  <button
                    type="button"
                    onClick={handleNext}
@@ -97,15 +97,15 @@ import type { SectionId } from '../constants/sections'
                </div>
              </div>
            )}
- 
+
            <div className="grid grid-cols-1 gap-4 px-2 sm:grid-cols-3 sm:px-8 md:px-12">
              {visibleProjects.map((project) => (
                <ProjectCard key={`${project.name}-${project.category}`} project={project} />
              ))}
            </div>
- 
+
            {showNavigation && (
-             <div className="mt-6 flex items-center justify-center gap-2">
+             <div className="mt-6 hidden items-center justify-center gap-2 md:flex">
                {projects.map((project, index) => {
                  const isActive = index === startIndex
                  return (

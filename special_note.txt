@@ -1,0 +1,5 @@
+when you need galary session, 
+    uncomment;
+        section.ts - line 7
+        portfolio.tsx - line 316,137
+        navebar.tsx - line 43
