@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { motion, useAnimation, useSpring, useTransform } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
 import { Navbar } from './Navbar'
+import { HandGestureProvider } from './HandGestureProvider'
+import { WelcomeGesturePopup } from './WelcomeGesturePopup'
 import { sections, type SectionId } from '../constants/sections'
 import { HomeSection } from '../sections/HomeSection'
 import { ProjectsSection } from '../sections/ProjectsSection'
@@ -225,7 +227,11 @@ export function Portfolio() {
     isMobile ? 'min-h-screen overflow-x-hidden' : 'h-screen overflow-hidden',
   ].join(' ')
 
+  const handleSwipeUp   = useCallback(() => changeSectionByDelta(-1), [changeSectionByDelta])
+  const handleSwipeDown = useCallback(() => changeSectionByDelta(1),  [changeSectionByDelta])
+
   return (
+    <HandGestureProvider onSwipeUp={handleSwipeUp} onSwipeDown={handleSwipeDown}>
     <div className={rootClassName}>
       <Navbar
         activeSection={activeSectionId}
@@ -298,6 +304,8 @@ export function Portfolio() {
         </div>
       </motion.button>
     </div>
+    <WelcomeGesturePopup />
+    </HandGestureProvider>
   )
 }
 
