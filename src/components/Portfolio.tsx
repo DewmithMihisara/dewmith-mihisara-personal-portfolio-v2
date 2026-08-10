@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { motion, useAnimation, useSpring, useTransform } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
 import { Navbar } from './Navbar'
+import { HandGestureProvider } from './HandGestureProvider'
+import { WelcomeGesturePopup } from './WelcomeGesturePopup'
 import { sections, type SectionId } from '../constants/sections'
 import { HomeSection } from '../sections/HomeSection'
 import { ProjectsSection } from '../sections/ProjectsSection'
@@ -30,7 +32,7 @@ export function Portfolio() {
   const progressGradient = useTransform(progressMotion, (value) => {
     const clamped = Math.min(Math.max(value, 0), 1)
     const degrees = clamped * 360
-    return `conic-gradient(from 90deg at 50% 50%, rgba(37,99,235,0.85) ${degrees}deg, rgba(226,232,240,0.5) ${degrees}deg)`
+    return `conic-gradient(from 90deg at 50% 50%, rgba(10,10,10,0.8) ${degrees}deg, rgba(229,229,229,0.5) ${degrees}deg)`
   })
 
   const activeSectionId = useMemo<SectionId>(
@@ -221,11 +223,15 @@ export function Portfolio() {
   }, [activeIndex, isMobile])
 
   const rootClassName = [
-    'relative w-full bg-slate-50 text-slate-900',
+    'relative w-full bg-background text-foreground',
     isMobile ? 'min-h-screen overflow-x-hidden' : 'h-screen overflow-hidden',
   ].join(' ')
 
+  const handleSwipeUp   = useCallback(() => changeSectionByDelta(-1), [changeSectionByDelta])
+  const handleSwipeDown = useCallback(() => changeSectionByDelta(1),  [changeSectionByDelta])
+
   return (
+    <HandGestureProvider onSwipeUp={handleSwipeUp} onSwipeDown={handleSwipeDown}>
     <div className={rootClassName}>
       <Navbar
         activeSection={activeSectionId}
@@ -283,14 +289,14 @@ export function Portfolio() {
           }
         }}
         className={[
-          'group pointer-events-auto fixed right-4 z-40 flex items-center justify-center rounded-full border border-white/70 bg-white/80 backdrop-blur transition hover:-translate-y-1 hover:shadow-2xl',
-          isMobile ? 'bottom-6 size-12 shadow-lg shadow-blue-500/10' : 'bottom-8 size-14 shadow-xl shadow-blue-500/10',
+          'group pointer-events-auto fixed right-4 z-40 flex items-center justify-center rounded-full border border-border bg-background transition hover:border-foreground/40',
+          isMobile ? 'bottom-6 size-12' : 'bottom-8 size-14',
         ].join(' ')}
         style={{ backgroundImage: progressGradient }}
       >
         <div
           className={[
-            'flex items-center justify-center rounded-full bg-white/80 text-blue-600 shadow-inner shadow-blue-500/10 transition group-hover:text-blue-700',
+            'flex items-center justify-center rounded-full bg-background text-foreground transition group-hover:opacity-80',
             isMobile ? 'size-9' : 'size-10',
           ].join(' ')}
         >
@@ -298,6 +304,8 @@ export function Portfolio() {
         </div>
       </motion.button>
     </div>
+    <WelcomeGesturePopup />
+    </HandGestureProvider>
   )
 }
 

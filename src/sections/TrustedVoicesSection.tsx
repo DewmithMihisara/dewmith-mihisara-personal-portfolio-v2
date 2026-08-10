@@ -31,30 +31,18 @@ const recommendations = [
 
 const sliderVariants = {
   enter: (direction: number) => ({
-    x: direction > 0 ? 140 : -140,
+    x: direction > 0 ? 60 : -60,
     opacity: 0,
-    scale: 0.92,
-    filter: 'blur(6px)',
   }),
   center: {
     x: 0,
     opacity: 1,
-    scale: 1,
-    filter: 'blur(0px)',
-    transition: {
-      duration: 0.6,
-      ease: [0.22, 1, 0.36, 1] as const,
-    },
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
   },
   exit: (direction: number) => ({
-    x: direction > 0 ? -140 : 140,
+    x: direction > 0 ? -60 : 60,
     opacity: 0,
-    scale: 0.92,
-    filter: 'blur(6px)',
-    transition: {
-      duration: 0.5,
-      ease: [0.65, 0, 0.35, 1] as const,
-    },
+    transition: { duration: 0.3, ease: [0.65, 0, 0.35, 1] as const },
   }),
 }
 
@@ -85,147 +73,98 @@ export function TrustedVoicesSection() {
   }
 
   return (
-    <section className="relative flex h-full flex-col justify-center bg-gradient-to-br from-white via-slate-50 to-blue-50/40 px-6 pb-24 pt-28 md:px-16">
-      <div className="absolute inset-0">
+    <section className="flex h-full flex-col justify-center overflow-y-auto bg-background px-6 pb-24 pt-28 md:px-16">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-10">
         <motion.div
-          className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-blue-100/30 to-transparent blur-3xl"
-          animate={{ opacity: [0.6, 1, 0.6] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute left-1/5 top-1/4 h-48 w-48 rounded-full bg-blue-200/30 blur-3xl"
-          animate={{ x: [0, 18, 0], y: [0, -12, 0], opacity: [0.6, 0.85, 0.6] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute bottom-12 right-1/4 h-56 w-56 rounded-full bg-blue-100/40 blur-3xl"
-          animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.9, 0.5] }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      </div>
-
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10">
-        <motion.div
-          className="space-y-3"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-flex items-center gap-2 rounded-full bg-blue-100/70 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-blue-700">
-            Trusted Voices
-          </span>
-          <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">
+          <p className="eyebrow">Trusted Voices</p>
+          <h2 className="mt-5 font-display text-3xl leading-tight text-foreground sm:text-4xl">
             Testimonials that fuel my craft
           </h2>
-          <p className="max-w-3xl text-base text-slate-600">
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
             Mentors, leaders, and collaborators who have experienced my commitment to quality
             engineering, dependable delivery, and collaborative problem solving.
           </p>
         </motion.div>
 
-        <div className="relative mx-auto w-full max-w-[min(100%,24rem)] sm:max-w-3xl md:max-w-5xl">
-          <div className="absolute -inset-6 sm:-inset-10 md:-inset-12 bg-gradient-to-r from-blue-500/10 via-transparent to-blue-500/10 blur-3xl" />
+        <div className="card mx-auto w-full max-w-3xl">
+          <div className="flex items-center justify-between gap-4">
+            <span className="flex size-10 items-center justify-center rounded-full border border-border text-foreground">
+              <Quote className="size-4" />
+            </span>
+            <span className="tag">
+              {String(activeIndex + 1).padStart(2, '0')}/{String(total).padStart(2, '0')}
+            </span>
+          </div>
 
-          <div className="relative overflow-hidden rounded-[1.75rem] border border-slate-200/70 bg-white/85 p-2 shadow-2xl shadow-blue-900/20 backdrop-blur-xl md:rounded-[2.25rem]">
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent" />
-
-            <div className="flex items-center justify-between gap-3 px-4 pt-5 md:gap-4 md:px-6 md:pt-6">
-              <motion.button
-                type="button"
-                onClick={() => cycleTo(activeIndex - 1)}
-                className="group flex size-10 items-center justify-center rounded-full border border-blue-200/70 bg-white/80 text-blue-600 shadow-md shadow-blue-500/20 transition hover:-translate-x-1 hover:border-blue-400 hover:bg-white md:size-11"
-                whileTap={{ scale: 0.92 }}
-                aria-label="Previous recommendation"
+          <div className="mt-6 overflow-hidden">
+            <AnimatePresence custom={direction} initial={false} mode="wait">
+              <motion.article
+                key={activeRecommendation.author}
+                custom={direction}
+                variants={sliderVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
               >
-                <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" />
-              </motion.button>
-              <motion.div
-                className="text-[10px] font-semibold uppercase tracking-[0.4em] text-slate-400 sm:text-xs"
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                {String(activeIndex + 1).padStart(2, '0')}/{String(total).padStart(2, '0')}
-              </motion.div>
-              <motion.button
-                type="button"
-                onClick={() => cycleTo(activeIndex + 1)}
-                className="group flex size-10 items-center justify-center rounded-full border border-blue-200/70 bg-white/80 text-blue-600 shadow-md shadow-blue-500/20 transition hover:translate-x-1 hover:border-blue-400 hover:bg-white md:size-11"
-                whileTap={{ scale: 0.92 }}
-                aria-label="Next recommendation"
-              >
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-              </motion.button>
-            </div>
+                <p className="whitespace-pre-line text-sm leading-relaxed text-foreground sm:text-base">
+                  {activeRecommendation.quote}
+                </p>
 
-            <div className="relative px-4 pb-8 pt-5 sm:px-8 sm:pb-10 sm:pt-6 md:px-10 md:pb-12">
-              <AnimatePresence custom={direction} initial={false} mode="wait">
-                <motion.article
-                  key={activeRecommendation.author}
-                  className="flex flex-1 flex-col gap-6"
-                  custom={direction}
-                  variants={sliderVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="inline-flex size-11 items-center justify-center rounded-full border border-blue-200/80 bg-gradient-to-br from-blue-100 via-white to-white text-blue-600 shadow-inner shadow-blue-500/20 md:size-12">
-                      <Quote className="size-5" />
-                    </span>
-                    <motion.div
-                      className="h-px flex-1 bg-gradient-to-r from-blue-500/40 via-blue-300/30 to-transparent"
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.8, ease: 'easeOut' }}
-                    />
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.4em] text-blue-500/80 sm:text-xs">
-                      Testimonial
-                    </span>
-                  </div>
-
-                  <p className="whitespace-pre-line text-sm leading-relaxed text-slate-600 sm:text-base">
-                    {activeRecommendation.quote}
+                <div className="mt-5 border-t border-border pt-4">
+                  <h3 className="text-base font-semibold text-foreground">
+                    {activeRecommendation.author}
+                  </h3>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {[activeRecommendation.role, activeRecommendation.date, activeRecommendation.relation]
+                      .filter(Boolean)
+                      .join(' · ')}
                   </p>
+                </div>
+              </motion.article>
+            </AnimatePresence>
+          </div>
 
-                  <div className="space-y-1 rounded-2xl border border-slate-200/70 bg-white/90 p-4 shadow-inner shadow-blue-500/10">
-                    <h3 className="text-base font-semibold text-slate-900 sm:text-lg">
-                      {activeRecommendation.author}
-                    </h3>
-                    <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-blue-600 sm:text-xs">
-                      {[activeRecommendation.role, activeRecommendation.date, activeRecommendation.relation]
-                        .filter(Boolean)
-                        .join(' · ')}
-                    </p>
-                  </div>
-                </motion.article>
-              </AnimatePresence>
-            </div>
-
-            <div className="flex items-center justify-center gap-2 pb-5">
+          <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
+            <div className="flex items-center gap-2">
               {recommendations.map((item, index) => {
                 const isActive = index === activeIndex
                 return (
-                  <motion.button
+                  <button
                     key={item.author}
                     type="button"
                     onClick={() => handleDotNavigate(index)}
-                    className="relative flex h-3.5 w-3.5 items-center justify-center"
-                    whileTap={{ scale: 0.9 }}
+                    className={[
+                      'size-2 rounded-full transition-all duration-200',
+                      isActive ? 'scale-125 bg-foreground' : 'bg-border',
+                    ].join(' ')}
                     aria-label={`Show testimonial ${index + 1}`}
-                  >
-                    <span className="absolute inset-0 rounded-full bg-blue-200/40 blur-[2px]" />
-                    <span
-                      className={[
-                        'relative block size-2 rounded-full transition-all duration-300',
-                        isActive ? 'bg-blue-600 shadow-[0_0_12px_rgba(37,99,235,0.7)] scale-125' : 'bg-slate-300',
-                      ].join(' ')}
-                    />
-                  </motion.button>
+                  />
                 )
               })}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => cycleTo(activeIndex - 1)}
+                className="flex size-9 items-center justify-center rounded-lg border border-border text-foreground transition hover:border-foreground/40"
+                aria-label="Previous recommendation"
+              >
+                <ArrowLeft className="size-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => cycleTo(activeIndex + 1)}
+                className="flex size-9 items-center justify-center rounded-lg border border-border text-foreground transition hover:border-foreground/40"
+                aria-label="Next recommendation"
+              >
+                <ArrowRight className="size-4" />
+              </button>
             </div>
           </div>
         </div>
@@ -233,4 +172,3 @@ export function TrustedVoicesSection() {
     </section>
   )
 }
-
