@@ -169,7 +169,7 @@ export function HandGestureProvider({ children, onSwipeUp, onSwipeDown }: Props)
       const lm = landmarks[i]
       ctx.beginPath()
       ctx.arc(lm.x * canvas.width, lm.y * canvas.height, 5, 0, Math.PI * 2)
-      ctx.fillStyle = i === WRIST_IDX ? '#2563eb' : '#93c5fd'
+      ctx.fillStyle = i === WRIST_IDX ? '#171717' : '#a1a1a1'
       ctx.fill()
     }
   }, [])
@@ -291,13 +291,13 @@ export function HandGestureProvider({ children, onSwipeUp, onSwipeDown }: Props)
             {/* Camera preview circle */}
             <motion.div
               className={[
-                'relative overflow-hidden rounded-full border-2 shadow-xl shadow-blue-500/20 transition-all duration-300 bg-slate-900',
+                'relative overflow-hidden rounded-full border-2 transition-all duration-300 bg-foreground',
                 isMinimized ? 'size-10' : 'size-20',
-                isPulsing ? 'border-blue-400' : 'border-white/70',
+                isPulsing ? 'border-foreground/60' : 'border-white/70',
               ].join(' ')}
               animate={
                 isPulsing
-                  ? { boxShadow: ['0 0 0 0 rgba(37,99,235,0.5)', '0 0 0 14px rgba(37,99,235,0)'] }
+                  ? { boxShadow: ['0 0 0 0 rgba(10,10,10,0.5)', '0 0 0 14px rgba(10,10,10,0)'] }
                   : {}
               }
               transition={{ duration: 0.6 }}
@@ -321,7 +321,7 @@ export function HandGestureProvider({ children, onSwipeUp, onSwipeDown }: Props)
             <button
               type="button"
               onClick={() => setIsMinimized(prev => !prev)}
-              className="flex size-6 items-center justify-center rounded-full bg-white/80 text-slate-500 shadow-md backdrop-blur transition hover:text-blue-600"
+              className="flex size-6 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition hover:text-foreground"
               aria-label={isMinimized ? 'Expand camera preview' : 'Minimize camera preview'}
             >
               {isMinimized
@@ -334,7 +334,7 @@ export function HandGestureProvider({ children, onSwipeUp, onSwipeDown }: Props)
             <button
               type="button"
               onClick={disable}
-              className="flex items-center gap-1 rounded-full bg-white/80 px-2 py-1 text-xs font-medium text-slate-500 shadow-md backdrop-blur transition hover:text-red-500"
+              className="flex items-center gap-1 rounded-full border border-border bg-background px-2 py-1 text-xs font-medium text-muted-foreground transition hover:text-red-500"
             >
               <CameraOff className="size-3" />
               Stop

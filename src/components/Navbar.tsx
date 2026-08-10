@@ -14,14 +14,6 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
   const [profileOpen, setProfileOpen] = useState(false)
   const [mobileProfileOpen, setMobileProfileOpen] = useState(false)
 
-  const variant = useMemo(
-    () =>
-      scrolled
-        ? 'scrolled'
-        : 'top',
-    [scrolled],
-  )
-
   const sectionLabelMap = useMemo(
     () => Object.fromEntries(sections.map((section) => [section.id, section.label])) as Record<
       SectionId,
@@ -41,7 +33,6 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
     { key: 'projects', label: 'Projects', section: 'projects' as SectionId },
     { key: 'profile', label: 'Profile', children: profileSections },
     // { key: 'gallery', label: 'Gallery', section: 'gallery' as SectionId },
-    { key: 'contact', label: 'Contact', section: 'contact' as SectionId },
   ] as const
 
   const isProfileActive = profileSections.includes(activeSection)
@@ -59,21 +50,21 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
   }
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-5">
-      <motion.nav
-        className="pointer-events-auto flex w-full max-w-6xl items-center justify-between gap-4 rounded-full border px-6 py-3 shadow-lg shadow-slate-900/5"
-        variants={navbarVariants}
-        animate={variant}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-      >
+    <header
+      className={[
+        'fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300',
+        scrolled ? 'border-border bg-background/95 backdrop-blur' : 'border-transparent',
+      ].join(' ')}
+    >
+      <nav className="mx-auto flex h-14 w-full max-w-5xl items-center gap-6 px-6">
         <button
-          className="text-lg font-semibold tracking-tight text-slate-900"
+          className="font-mono text-base font-semibold tracking-tight text-foreground"
           onClick={() => handleNavigate('home')}
         >
-          Dewmith Mihisara
+          Dewmith<span className="text-muted-foreground">.dev</span>
         </button>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="ml-auto hidden items-center gap-6 text-sm md:flex">
           {navItems.map((item) => {
             if ('children' in item) {
               return (
@@ -86,33 +77,27 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
                   <button
                     onClick={() => setProfileOpen((prev) => !prev)}
                     className={[
-                      'relative flex items-center gap-1 text-sm font-medium transition-colors duration-300',
-                      isProfileActive ? 'text-blue-600' : 'text-slate-600 hover:text-blue-500',
+                      'flex items-center gap-1 border-b border-transparent pb-0.5 transition-colors duration-200',
+                      isProfileActive ? 'border-foreground text-foreground' : 'text-muted-foreground hover:text-foreground',
                     ].join(' ')}
                   >
                     {item.label}
                     <ChevronDown
                       className={[
-                        'size-4 transition-transform duration-300',
+                        'size-3.5 transition-transform duration-200',
                         profileOpen ? 'rotate-180' : '',
                       ].join(' ')}
                     />
-                    {isProfileActive && (
-                      <motion.span
-                        layoutId="nav-active-underline"
-                        className="absolute inset-x-0 -bottom-2 h-0.5 rounded-full bg-blue-600"
-                      />
-                    )}
                   </button>
 
                   <AnimatePresence>
                     {profileOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 6 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute left-0 top-10 min-w-[220px] rounded-2xl border border-slate-200 bg-white/95 p-2 shadow-xl backdrop-blur"
+                        exit={{ opacity: 0, y: 6 }}
+                        transition={{ duration: 0.15 }}
+                        className="card absolute left-0 top-9 min-w-[200px] !p-1.5"
                       >
                         {item.children.map((child: SectionId) => {
                           const isActiveChild = activeSection === child
@@ -121,10 +106,10 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
                               key={child}
                               onClick={() => handleNavigate(child)}
                               className={[
-                                'flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-200',
+                                'block w-full rounded-md px-3 py-2 text-left text-sm transition-colors duration-150',
                                 isActiveChild
-                                  ? 'bg-blue-50 text-blue-600'
-                                  : 'text-slate-600 hover:bg-slate-100',
+                                  ? 'bg-accent text-accent-foreground'
+                                  : 'text-muted-foreground hover:bg-secondary hover:text-foreground',
                               ].join(' ')}
                             >
                               {sectionLabelMap[child]}
@@ -144,24 +129,25 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
                 key={item.key}
                 onClick={() => handleNavigate(item.section)}
                 className={[
-                  'relative text-sm font-medium transition-colors duration-300',
-                  isActive ? 'text-blue-600' : 'text-slate-600 hover:text-blue-500',
+                  'border-b border-transparent pb-0.5 transition-colors duration-200',
+                  isActive ? 'border-foreground text-foreground' : 'text-muted-foreground hover:text-foreground',
                 ].join(' ')}
               >
                 {item.label}
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-active-underline"
-                    className="absolute inset-x-0 -bottom-2 h-0.5 rounded-full bg-blue-600"
-                  />
-                )}
               </button>
             )
           })}
         </div>
 
         <button
-          className="flex size-10 items-center justify-center rounded-full border border-slate-200/70 bg-white/60 text-slate-600 transition hover:border-blue-200 hover:text-blue-600 md:hidden"
+          onClick={() => handleNavigate('contact')}
+          className="ml-auto hidden rounded-lg border border-foreground bg-foreground px-3 py-1.5 text-sm font-medium text-background transition-opacity hover:opacity-85 md:inline-flex md:ml-0"
+        >
+          Contact
+        </button>
+
+        <button
+          className="ml-auto flex size-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition hover:border-foreground/40 hover:text-foreground md:hidden"
           onClick={() =>
             setIsOpen((prev) => {
               const next = !prev
@@ -174,12 +160,12 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
           aria-label="Toggle navigation menu"
         >
           {isOpen ? (
-            <X className="size-5" strokeWidth={1.5} />
+            <X className="size-4" strokeWidth={1.5} />
           ) : (
-            <Menu className="size-5" strokeWidth={1.5} />
+            <Menu className="size-4" strokeWidth={1.5} />
           )}
         </button>
-      </motion.nav>
+      </nav>
 
       <AnimatePresence>
         {isOpen && (
@@ -188,24 +174,24 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="pointer-events-auto mx-4 mt-3 rounded-3xl border border-white/70 bg-white/95 px-6 pb-6 pt-2 shadow-xl shadow-blue-500/10 backdrop-blur md:hidden"
+            className="overflow-hidden border-t border-border bg-background md:hidden"
           >
-            <div className="flex flex-col gap-2">
+            <div className="mx-auto flex w-full max-w-5xl flex-col divide-y divide-border px-6">
               {navItems.map((item) => {
                 if ('children' in item) {
                   return (
-                    <div key={item.key} className="rounded-2xl border border-slate-200/70 p-2">
+                    <div key={item.key} className="py-1">
                       <button
                         onClick={() => setMobileProfileOpen((prev) => !prev)}
                         className={[
-                          'flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-semibold transition-colors duration-200',
-                          isProfileActive ? 'bg-blue-50 text-blue-600' : 'text-slate-700',
+                          'flex w-full items-center justify-between py-3 text-left text-sm font-medium transition-colors duration-150',
+                          isProfileActive ? 'text-foreground' : 'text-muted-foreground',
                         ].join(' ')}
                       >
                         {item.label}
                         <ChevronDown
                           className={[
-                            'size-4 transition-transform duration-300',
+                            'size-4 transition-transform duration-200',
                             mobileProfileOpen ? 'rotate-180' : '',
                           ].join(' ')}
                         />
@@ -217,17 +203,17 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="mt-2 space-y-1 overflow-hidden pl-3"
+                            className="space-y-1 overflow-hidden pb-3 pl-3"
                           >
                             {item.children.map((child: SectionId) => (
                               <button
                                 key={child}
                                 onClick={() => handleNavigate(child)}
                                 className={[
-                                  'block w-full rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors duration-200',
+                                  'block w-full rounded-md px-2 py-2 text-left text-sm transition-colors duration-150',
                                   activeSection === child
-                                    ? 'bg-blue-50 text-blue-600'
-                                    : 'text-slate-600 hover:bg-slate-100',
+                                    ? 'bg-accent text-accent-foreground'
+                                    : 'text-muted-foreground hover:bg-secondary',
                                 ].join(' ')}
                               >
                                 {sectionLabelMap[child]}
@@ -245,16 +231,20 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
                     key={item.key}
                     onClick={() => handleNavigate(item.section)}
                     className={[
-                      'rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors duration-200',
-                      activeSection === item.section
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'text-slate-600 hover:bg-slate-100',
+                      'py-3 text-left text-sm font-medium transition-colors duration-150',
+                      activeSection === item.section ? 'text-foreground' : 'text-muted-foreground',
                     ].join(' ')}
                   >
                     {item.label}
                   </button>
                 )
               })}
+              <button
+                onClick={() => handleNavigate('contact')}
+                className="my-3 rounded-lg border border-foreground bg-foreground px-3 py-2 text-center text-sm font-medium text-background transition-opacity hover:opacity-85"
+              >
+                Contact
+              </button>
             </div>
           </motion.div>
         )}
@@ -262,19 +252,3 @@ export function Navbar({ activeSection, onNavigate, scrolled }: NavbarProps) {
     </header>
   )
 }
-
-const navbarVariants = {
-  top: {
-    background:
-      'linear-gradient(120deg, rgba(255,255,255,0.92) 10%, rgba(240,247,255,0.82) 45%, rgba(189,215,255,0.78) 100%)',
-    borderColor: 'rgba(232,240,255,0.8)',
-    boxShadow: '0px 22px 45px -30px rgba(37,99,235,0.45)',
-  },
-  scrolled: {
-    background:
-      'linear-gradient(120deg, rgba(255,255,255,0.95) 10%, rgba(248,250,255,0.92) 100%)',
-    borderColor: 'rgba(226,232,240,0.8)',
-    boxShadow: '0px 20px 35px -28px rgba(15,23,42,0.35)',
-  },
-} as const
-

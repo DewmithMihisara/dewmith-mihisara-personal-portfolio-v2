@@ -27,8 +27,8 @@ function SwipeUpIllustration() {
         animate={{ y: [-2, -8, -2] }}
         transition={{ repeat: Infinity, duration: 1.1, ease: 'easeInOut' }}
       >
-        <path d="M24 14 L24 4" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M20 8 L24 4 L28 8" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        <path d="M24 14 L24 4" stroke="#171717" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M20 8 L24 4 L28 8" stroke="#171717" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </motion.g>
     </svg>
   )
@@ -51,8 +51,8 @@ function SwipeDownIllustration() {
         animate={{ y: [2, 8, 2] }}
         transition={{ repeat: Infinity, duration: 1.1, ease: 'easeInOut' }}
       >
-        <path d="M24 42 L24 52" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M20 48 L24 52 L28 48" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        <path d="M24 42 L24 52" stroke="#171717" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M20 48 L24 52 L28 48" stroke="#171717" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </motion.g>
     </svg>
   )
@@ -85,7 +85,7 @@ function PinchIllustration() {
         cx="24"
         cy="29"
         r="4"
-        fill="#2563eb"
+        fill="#171717"
         animate={{ scale: [1, 1.4, 1], opacity: [0.8, 1, 0.8] }}
         transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
       />
@@ -161,7 +161,7 @@ export function WelcomeGesturePopup() {
             {/* Backdrop */}
             <Dialog.Overlay asChild>
               <motion.div
-                className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm"
+                className="fixed inset-0 z-50 bg-foreground/60 backdrop-blur-sm"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -177,14 +177,14 @@ export function WelcomeGesturePopup() {
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
               transition={{ type: 'spring', stiffness: 260, damping: 28 }}
             >
-              <Dialog.Content className="relative w-full max-w-lg rounded-3xl border border-white/70 bg-white/97 p-8 shadow-2xl shadow-blue-500/10 backdrop-blur focus:outline-none">
+              <Dialog.Content className="relative w-full max-w-lg rounded-lg border border-border bg-background p-8 focus:outline-none">
 
                 {/* Close / Skip button */}
                 <Dialog.Close asChild>
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full bg-slate-100 text-slate-400 transition hover:bg-slate-200 hover:text-slate-600"
+                    className="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full bg-secondary text-muted-foreground transition hover:bg-accent hover:text-accent-foreground"
                     aria-label="Skip gesture tutorial"
                   >
                     <X className="size-4" />
@@ -194,17 +194,17 @@ export function WelcomeGesturePopup() {
                 {/* Header */}
                 <div className="mb-6 text-center">
                   <motion.div
-                    className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-blue-50"
+                    className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-accent"
                     animate={{ rotate: [0, -8, 8, -4, 4, 0] }}
                     transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut', repeatDelay: 1 }}
                   >
-                    <Hand className="size-7 text-blue-600" />
+                    <Hand className="size-7 text-accent-foreground" />
                   </motion.div>
 
-                  <Dialog.Title className="text-xl font-semibold text-slate-900">
+                  <Dialog.Title className="font-display text-xl font-semibold text-foreground">
                     Navigate with Gestures
                   </Dialog.Title>
-                  <Dialog.Description className="mt-2 text-sm leading-relaxed text-slate-500">
+                  <Dialog.Description className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     Take your hands off the mouse &amp; keyboard — sit back comfortably and
                     navigate this site using hand gestures in front of your camera.
                   </Dialog.Description>
@@ -219,11 +219,11 @@ export function WelcomeGesturePopup() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.12 + i * 0.09, duration: 0.4 }}
                       whileHover={{ scale: 1.04 }}
-                      className="flex flex-col items-center gap-2 rounded-2xl border border-slate-200/70 bg-slate-50/80 px-3 py-4"
+                      className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-secondary/80 px-3 py-4"
                     >
                       <card.Illustration />
-                      <span className="text-xs font-semibold text-slate-700">{card.label}</span>
-                      <span className="text-center text-[11px] leading-tight text-slate-500">
+                      <span className="text-xs font-semibold text-foreground">{card.label}</span>
+                      <span className="text-center text-[11px] leading-tight text-muted-foreground">
                         {card.description}
                       </span>
                     </motion.div>
@@ -247,7 +247,7 @@ export function WelcomeGesturePopup() {
                     type="button"
                     onClick={() => { void handleEnable() }}
                     disabled={isEnabling}
-                    className="flex w-full items-center justify-center gap-2 rounded-full bg-blue-600 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-700 active:scale-[0.98] disabled:opacity-60"
+                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3 text-sm font-semibold text-primary-foreground transition hover:opacity-85 active:scale-[0.98] disabled:opacity-60"
                   >
                     {isEnabling ? (
                       <>
@@ -269,7 +269,7 @@ export function WelcomeGesturePopup() {
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="w-full rounded-full py-2 text-sm font-medium text-slate-400 transition hover:text-slate-700"
+                    className="w-full rounded-lg py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground"
                   >
                     Skip for now
                   </button>
